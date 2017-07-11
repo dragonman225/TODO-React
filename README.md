@@ -1,6 +1,7 @@
 # TODO-React
 
 A simple to-do list web app written in ReactJS.
+Fork from https://github.com/StephenGrider/ReduxSimpleStarter.
 
 ### Getting Started
 
