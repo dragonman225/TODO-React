@@ -8,11 +8,11 @@ const TodoGroupItem = (props) => {
       <td className="td-center" onClick={() => p.onItemSelect(p.editting ? null : p.item)}>
         {
           p.editting ?
-            <input type="text" value={p.item} onChange={event => p.onGroupNameChange(event.target.value)} /> :
+            <input type="text" value={p.newGroupName} onChange={event => p.onGroupNameChange(event.target.value)} /> :
             <span>{p.item}</span>
         }
       </td>
-      <td className="td-primary" onClick={() => p.onItemEdit(p.editting ? null : p.item)}>
+      <td className="td-primary" onClick={() => p.onEditGroupChange(p.editting ? null : p.item)}>
         {
           p.editting ?
             <i className="fa fa-check" aria-hidden="true" /> :

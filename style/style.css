@@ -24,12 +24,19 @@ body, html, .wrapper, .container-full {
   background-color: #e0e0e0;
 }
 
+.msg-err {
+  font-size: 1.5rem;
+  width: 30rem;
+  color: #212121;
+  margin: 1rem 1rem 1rem 3rem;
+}
+
 tr .td-center {
   color: #212121;
   background-color: #fafafa;
   text-align: center;
   max-width: 5rem;
-  padding: 1rem;
+  padding: 1rem 1rem 1rem 2rem;
   transition: 0.3s;
 }
 
@@ -52,7 +59,7 @@ tr .td-danger:hover {
 
 tr .td-primary {
   color: #eeeeee;
-  background-color: #3f51b5;
+  background-color: #2196f3;
   text-align: center;
   max-width: 0.6rem;
   padding: 0.7rem;
@@ -60,7 +67,7 @@ tr .td-primary {
 }
 
 tr .td-primary:hover {
-  background-color: #5c6bc0;
+  background-color: #64b5f6;
 }
 
 tr .td-empty {
