@@ -9,10 +9,17 @@ body, html, .wrapper, .container-full {
 }
 
 .title {
-  margin-top: 20px;
+  color: #212121;
+  margin-top: 2rem;
+}
+
+.middle-title {
+  margin-top: 2.6rem;
 }
 
 .container-full .row {
+  margin: 0;
+  width: 100%;
   height: 100%;
 }
 
@@ -21,14 +28,17 @@ body, html, .wrapper, .container-full {
 }
 
 .left-bar {
+  background-color: #bdbdbd;
+}
+
+.main-area {
   background-color: #e0e0e0;
 }
 
 .msg-err {
   font-size: 1.5rem;
-  width: 30rem;
   color: #212121;
-  margin: 1rem 1rem 1rem 3rem;
+  margin: 1rem 1rem 1rem 2rem;
 }
 
 tr .td-center {
@@ -36,7 +46,7 @@ tr .td-center {
   background-color: #fafafa;
   text-align: center;
   max-width: 5rem;
-  padding: 1rem 1rem 1rem 2rem;
+  padding: 1rem 1rem 1rem 1.3rem;
   transition: 0.3s;
 }
 

@@ -1,13 +1,29 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import TodoGroup from './components/todo_group';
+import TodoList from './components/todo_list';
 
 class App extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      groups: ['aaa', 'bbb', 'ccc'],
+      groups: ['Work', 'Play', 'Reading', 'Music'],
+      list: [
+        {
+          group: 'Work',
+          description: 'Finish project A.',
+          note: 'Before 10p.m.',
+          priority: 0,
+        },
+        {
+          group: 'Play',
+          description: 'GTAV',
+          note: 'Mission 45',
+          priority: 2,
+        },
+      ],
+      filteredList: [],
       selectedGroup: null,
       edittingGroup: null,
       newGroupName: null,
@@ -71,6 +87,16 @@ class App extends Component {
     }
   }
 
+  changeList(groupName) {
+    const newFilteredList = this.state.list.filter((item) => {
+      return (item.group === groupName);
+    });
+    this.setState({
+      filteredList: newFilteredList,
+      selectedGroup: groupName,
+    });
+  }
+
   render() {
     return (
       <div className="row">
@@ -79,7 +105,7 @@ class App extends Component {
             <h2>TODOs</h2>
           </div>
           <TodoGroup
-            onItemSelect={selectedGroup => this.setState({ selectedGroup })}
+            onItemSelect={selectedGroup => this.changeList(selectedGroup)}
             onItemRemove={name => this.removeGroup(name)}
             onEditGroupChange={name => this.editGroupChange(name)}
             onGroupNameChange={newName => this.editGroupName(newName)}
@@ -88,6 +114,13 @@ class App extends Component {
             newGroupName={this.state.newGroupName}
             showErrMsg={!this.state.nameLegal}
             addGroup={() => this.addGroup()}
+          />
+        </div>
+        <div className="column column-75 main-area">
+          <TodoList
+            groups={this.state.groups}
+            filteredList={this.state.filteredList}
+            selectedGroup={this.state.selectedGroup}
           />
         </div>
       </div>
