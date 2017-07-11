@@ -1,0 +1,74 @@
+body, html, .wrapper, .container-full {
+  height: 100%;
+}
+
+.wrapper .container-full {
+  max-width: none;
+  text-align: center;
+  padding: 0;
+}
+
+.title {
+  margin-top: 20px;
+}
+
+.container-full .row {
+  height: 100%;
+}
+
+.container-full .row .column {
+  padding: 0;
+}
+
+.left-bar {
+  background-color: #e0e0e0;
+}
+
+tr .td-center {
+  color: #212121;
+  background-color: #fafafa;
+  text-align: center;
+  max-width: 5rem;
+  padding: 1rem;
+  transition: 0.3s;
+}
+
+tr .td-center:hover {
+  background-color: #eeeeee;
+}
+
+tr .td-danger {
+  color: #eeeeee;
+  background-color: #f44336;
+  text-align: center;
+  max-width: 0.6rem;
+  padding: 0.7rem;
+  transition: 0.3s;
+}
+
+tr .td-danger:hover {
+  background-color: #e57373;
+}
+
+tr .td-primary {
+  color: #eeeeee;
+  background-color: #3f51b5;
+  text-align: center;
+  max-width: 0.6rem;
+  padding: 0.7rem;
+  transition: 0.3s;
+}
+
+tr .td-primary:hover {
+  background-color: #5c6bc0;
+}
+
+tr .td-empty {
+  padding: 0;
+}
+
+td input[type="text"] {
+  margin: 0;
+  height: 2.5rem;
+  width: 100%;
+}
