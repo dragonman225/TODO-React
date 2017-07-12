@@ -9,8 +9,8 @@ body, html, .wrapper, .container-full {
 }
 
 @keyframes fade-in {
-    from { opacity:0; }
-    to { opacity:1; }
+  from { opacity:0; }
+  to { opacity:1; }
 }
 
 .title {
@@ -35,7 +35,8 @@ body, html, .wrapper, .container-full {
 }
 
 .left-bar {
-  background-color: #bdbdbd;
+  background: #bdbdbd;
+  background: linear-gradient(-90deg, #aaaaaa, #bdbdbd 7%);
 }
 
 .main-area {
@@ -48,6 +49,10 @@ body, html, .wrapper, .container-full {
   margin: 1rem 1rem 1rem 2rem;
   animation-name: fade-in;
   animation-duration: 0.3s;
+}
+
+.msg-empty {
+  padding-top: 17rem;
 }
 
 tr .td-center {
@@ -99,10 +104,27 @@ td input[type="text"] {
   width: 100%;
 }
 
+.group-pane, .list-pane {
+  margin: 2rem;
+}
+
+.detail-pane {
+  position: relative;
+  background: #eeeeee;
+  box-shadow: 0rem 0rem 1rem 0.6rem #cccccc;
+  min-height: 35rem;
+  margin: 2rem;
+  transition: 0.3s;
+}
+
 .detail-card {
   padding: 2rem;
   animation-name: fade-in;
   animation-duration: 0.4s;
+}
+
+.detail-card h4 {
+  margin-bottom: 0;
 }
 
 .btn-add {
@@ -119,4 +141,8 @@ td input[type="text"] {
 .btn-add:active {
   background-color: #42a5f5;
   border-color: #42a5f5;
+}
+
+.input-custom[type='text']:focus {
+  border-color: #9e9e9e;
 }

@@ -34,18 +34,23 @@ class App extends Component {
       edittingGroup: null,
       newGroupName: null,
       nameLegal: true,
+      edittingDetail: false,
     };
   }
 
   removeGroup(name) {
-    if (!this.state.nameLegal) {
+    if (!this.state.nameLegal || this.state.edittingDetail) {
       return;
     }
     const index = this.state.groups.indexOf(name);
     const newGroups = this.state.groups;
+    const newList = this.state.list.filter((item) => {
+      return (item.group !== name);
+    });
     newGroups.splice(index, 1);
     this.setState({
       groups: newGroups,
+      list: newList,
       selectedGroup: null,
       edittingGroup: null,
     });
@@ -69,6 +74,7 @@ class App extends Component {
   }
 
   addGroup() {
+    if (this.state.edittingDetail) return;
     const newGroups = this.state.groups;
     newGroups.push('');
     this.setState({
@@ -82,7 +88,7 @@ class App extends Component {
   }
 
   editGroupChange(name) {
-    if (this.state.nameLegal) {
+    if (this.state.nameLegal && !this.state.edittingDetail) {
       const index = this.state.groups.indexOf(this.state.edittingGroup);
       const newGroups = this.state.groups;
       const newList = this.state.list;
@@ -100,6 +106,7 @@ class App extends Component {
   }
 
   changeList(groupName) {
+    if (this.state.edittingDetail) return;
     const newFilteredList = this.state.list.filter((item) => {
       return (item.group === groupName);
     });
@@ -107,6 +114,28 @@ class App extends Component {
       filteredList: newFilteredList,
       selectedGroup: groupName,
     });
+  }
+
+  addItem(item) {
+    const newList = this.state.list;
+    newList.push(item);
+    this.setState({
+      list: newList,
+      edittingDetail: false,
+    });
+    this.changeList(this.state.selectedGroup);
+  }
+
+  editItem(oldEventName, modifiedItem) {
+    const newList = this.state.list;
+    newList.forEach((item) => {
+      if (item.description === oldEventName) item = modifiedItem;
+    });
+    this.setState({
+      list: newList,
+      edittingDetail: false,
+    });
+    this.changeList(this.state.selectedGroup);
   }
 
   render() {
@@ -130,6 +159,9 @@ class App extends Component {
         </div>
         <div className="column column-75 main-area">
           <TodoList
+            edittingDetail={val => this.setState({ edittingDetail: val })}
+            editItem={(oldEventName, item) => this.editItem(oldEventName, item)}
+            addItem={item => this.addItem(item)}
             groups={this.state.groups}
             filteredList={this.state.filteredList}
             selectedGroup={this.state.selectedGroup}
