@@ -29,6 +29,7 @@ class todoList extends Component {
         <TodoItem
           key={list.indexOf(item)}
           item={item}
+          onTodoItemSelect={selectedItem => this.setState({ selectedItem })}
         />
       );
     });
@@ -38,7 +39,7 @@ class todoList extends Component {
     return (
       <div>
         <div className="title">
-          <h2>{ this.props.selectedGroup }</h2>
+          <h2>{ (this.props.selectedGroup !== null) ? this.props.selectedGroup : 'No Group Selected' }</h2>
         </div>
         <div className="row">
           <div className="column column-60">
@@ -47,6 +48,7 @@ class todoList extends Component {
                 { (this.props.selectedGroup !== null) ? this.state.todoItems : <tr /> }
               </tbody>
             </table>
+            <button className="btn-add"><i className="fa fa-plus" aria-hidden="true" /></button>
           </div>
           <div className="column column-40">
             <TodoItemDetail

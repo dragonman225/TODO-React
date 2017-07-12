@@ -21,16 +21,16 @@ const todoGroup = (props) => {
   });
   return (
     <div>
-      <div className="msg-err">{error ? <i className="fa fa-exclamation-triangle" aria-hidden="true" /> : ''}{error ? 'WARNING: Field is empty or Name exists!' : ''}</div>
+      {error ? <div className="msg-err"><i className="fa fa-exclamation-triangle" aria-hidden="true" />WARNING: Field is empty or Name exists!</div> : <div />}
       <table>
         <tbody>
           {empty ? <tr><td className="td-empty" /><td className="td-center">No TODOs</td></tr> : todoGroupItems}
-          <TodoAddGroup
-            addGroup={props.addGroup}
-            adding={props.edittingGroup === ''}
-          />
         </tbody>
       </table>
+      <TodoAddGroup
+        addGroup={props.addGroup}
+        adding={props.edittingGroup === ''}
+      />
     </div>
   );
 };

@@ -2,19 +2,18 @@ import React from 'react';
 
 const todoItemDetail = (props) => {
   if (!props.detail) return <div>No item seleted.</div>;
-  console.log(props.detail);
   const p = props.detail;
   return (
     <div>
-      <div>
+      <div className="detail-card">
         <h3>Description</h3>
         {p.description}
       </div>
-      <div>
+      <div className="detail-card">
         <h3>Note</h3>
         {p.note}
       </div>
-      <div>
+      <div className="detail-card">
         <h3>Priority</h3>
         {p.priority}
       </div>

@@ -13,8 +13,14 @@ class App extends Component {
         {
           group: 'Work',
           description: 'Finish project A.',
-          note: 'Before 10p.m.',
+          note: 'Before 10p.m. Call S for demo time appointment. Cannot delay.',
           priority: 0,
+        },
+        {
+          group: 'Work',
+          description: 'Finish project B.',
+          note: 'Deadline is next Monday. Contact Baby in advance to check for his progress. ',
+          priority: 1,
         },
         {
           group: 'Play',
@@ -55,9 +61,9 @@ class App extends Component {
   }
 
   editGroupName(newName) {
-    const result = this.containSameOrEmpty(newName);
+    const validatePass = !this.containSameOrEmpty(newName);
     this.setState({
-      nameLegal: !result,
+      nameLegal: validatePass,
       newGroupName: newName,
     });
   }
@@ -67,10 +73,11 @@ class App extends Component {
     newGroups.push('');
     this.setState({
       groups: newGroups,
-      selectedGroup: '',
+      selectedGroup: null,
       edittingGroup: '',
       nameLegal: false,
       newGroupName: '',
+      filteredList: [],
     });
   }
 
@@ -78,8 +85,13 @@ class App extends Component {
     if (this.state.nameLegal) {
       const index = this.state.groups.indexOf(this.state.edittingGroup);
       const newGroups = this.state.groups;
+      const newList = this.state.list;
       newGroups[index] = this.state.newGroupName;
+      newList.forEach((item) => {
+        if (item.group === this.state.edittingGroup) item.group = this.state.newGroupName;
+      });
       this.setState({
+        list: newList,
         groups: newGroups,
         edittingGroup: name,
         newGroupName: name,

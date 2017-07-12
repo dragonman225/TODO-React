@@ -8,9 +8,16 @@ body, html, .wrapper, .container-full {
   padding: 0;
 }
 
+@keyframes fade-in {
+    from { opacity:0; }
+    to { opacity:1; }
+}
+
 .title {
   color: #212121;
   margin-top: 2rem;
+  animation-name: fade-in;
+  animation-duration: 0.4s;
 }
 
 .middle-title {
@@ -39,6 +46,8 @@ body, html, .wrapper, .container-full {
   font-size: 1.5rem;
   color: #212121;
   margin: 1rem 1rem 1rem 2rem;
+  animation-name: fade-in;
+  animation-duration: 0.3s;
 }
 
 tr .td-center {
@@ -88,4 +97,26 @@ td input[type="text"] {
   margin: 0;
   height: 2.5rem;
   width: 100%;
+}
+
+.detail-card {
+  padding: 2rem;
+  animation-name: fade-in;
+  animation-duration: 0.4s;
+}
+
+.btn-add {
+  background-color: #2196f3;
+  border-color: #2196f3;
+  transition: 0.3s;
+}
+
+.btn-add:hover {
+  background-color: #64b5f6;
+  border-color: #64b5f6;
+}
+
+.btn-add:active {
+  background-color: #42a5f5;
+  border-color: #42a5f5;
 }
