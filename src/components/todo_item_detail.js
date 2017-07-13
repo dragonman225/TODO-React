@@ -18,25 +18,27 @@ const todoItemDetail = (props) => {
     }
     return (
       <div className="detail-pane" style={css}>
+        <button className="btn-close" onClick={() => props.cancelEdit()}>
+          <i className="fa fa-times" aria-hidden="true" />
+        </button>
         <div className="detail-card">
           <h3>Event</h3>
-          <input value={pn.description} onChange={event => props.onDescChange(event.target.value)} />
+          <input className="input-custom" type="text" value={pn.description} onChange={event => props.onDescChange(event.target.value)} />
         </div>
         <div className="detail-card">
           <h3>Note</h3>
-          <textarea value={pn.note} onChange={event => props.onNoteChange(event.target.value)} />
+          <textarea className="input-custom" value={pn.note} onChange={event => props.onNoteChange(event.target.value)} />
         </div>
         <div className="detail-card">
           <h3>Priority</h3>
           <form>
-            <input type="radio" name="priority" /> High
-            <input type="radio" name="priority" /> Medium
-            <input type="radio" name="priority" /> Low
+            <input type="radio" name="priority" value="0" checked={pn.priority === 0} onChange={event => props.onPriorityChange(event.target.value)} /> High
+            <input type="radio" name="priority" value="1" checked={pn.priority === 1} onChange={event => props.onPriorityChange(event.target.value)} /> Medium
+            <input type="radio" name="priority" value="2" checked={pn.priority === 2} onChange={event => props.onPriorityChange(event.target.value)} /> Low
           </form>
         </div>
         <div className="detail-card">
-          <button onClick={() => props.cancelEdit()}>Cancel</button>
-          <button onClick={() => props.summitEdit(true)}>Add</button>
+          <button className="btn-add" onClick={() => props.summitEdit(true)}>Add</button>
         </div>
       </div>
     );
@@ -44,25 +46,27 @@ const todoItemDetail = (props) => {
   if (focus) {
     return (
       <div className="detail-pane" style={css}>
+        <button className="btn-close" onClick={() => props.cancelEdit()}>
+          <i className="fa fa-times" aria-hidden="true" />
+        </button>
         <div className="detail-card">
           <h3>Event</h3>
-          <input value={pn.description} onChange={event => props.onDescChange(event.target.value)} />
+          <input className="input-custom" type="text" value={pn.description} onChange={event => props.onDescChange(event.target.value)} />
         </div>
         <div className="detail-card">
           <h3>Note</h3>
-          <textarea value={pn.note} onChange={event => props.onNoteChange(event.target.value)} />
+          <textarea className="input-custom" value={pn.note} onChange={event => props.onNoteChange(event.target.value)} />
         </div>
         <div className="detail-card">
           <h3>Priority</h3>
           <form>
-            <input type="radio" name="priority" /> High
-            <input type="radio" name="priority" /> Medium
-            <input type="radio" name="priority" /> Low
+            <input type="radio" name="priority" value="0" checked={pn.priority === 0} onChange={event => props.onPriorityChange(event.target.value)} /> High
+            <input type="radio" name="priority" value="1" checked={pn.priority === 1} onChange={event => props.onPriorityChange(event.target.value)} /> Medium
+            <input type="radio" name="priority" value="2" checked={pn.priority === 2} onChange={event => props.onPriorityChange(event.target.value)} /> Low
           </form>
         </div>
         <div className="detail-card">
-          <button onClick={() => props.cancelEdit()}>Cancel</button>
-          <button onClick={() => props.summitEdit(isNew)}>{isNew ? 'Add' : 'Modify'}</button>
+          <button className="btn-add" onClick={() => props.summitEdit(isNew)}>{isNew ? 'Add' : 'Modify'}</button>
         </div>
       </div>
     );
@@ -79,7 +83,7 @@ const todoItemDetail = (props) => {
       </div>
       <div className="detail-card">
         <h3>Priority</h3>
-        {p.priority}
+        {(p.priority === 0) ? 'High' : ((p.priority === 1) ? 'Medium' : 'Low')}
       </div>
     </div>
   );

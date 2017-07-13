@@ -20,10 +20,13 @@ class todoList extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (this.props !== nextProps) {
+    const update = ((this.props.filteredList !== nextProps.filteredList) || (this.props.groups !== nextProps.groups) || (this.props.selectedGroup !== nextProps.selectedGroup));
+    console.log(true);
+    if (update) {
       const todoItems = this.makeTodoItemsJSX(nextProps.filteredList);
       this.setState({
         todoItems,
+        selectedItem: null,
       });
     }
   }
@@ -36,28 +39,31 @@ class todoList extends Component {
           item={item}
           onTodoItemSelect={selectedItem => this.setState({ selectedItem })}
           onTodoItemEdit={oldItem => this.startEditItem(oldItem)}
+          onTodoItemRemove={itemRemove => this.props.removeTodoItem(itemRemove)}
         />
       );
     });
   }
 
-  startEditItem(item) {
-    console.log(item);
+  startEditItem(dat) {
     this.props.edittingDetail(true);
     this.setState({
-      edittingItem: {
-        oldEventName: item.description,
-        newDetail: item
-      },
-      selectedItem: item,
+      selectedItem: dat,
       isEdittingDetail: true,
       edittingNew: false,
+      edittingItem: {
+        oldEventName: dat.description,
+        newDetail: dat,
+      },
     });
   }
 
   editNewDetail() {
+    if(this.props.selectedGroup === null) return;
     this.props.edittingDetail(true);
     this.setState({
+      isEdittingDetail: true,
+      edittingNew: true,
       edittingItem: {
         oldEventName: null,
         newDetail: {
@@ -67,8 +73,6 @@ class todoList extends Component {
           priority: 0,
         },
       },
-      isEdittingDetail: true,
-      edittingNew: true,
     });
   }
 
@@ -77,6 +81,10 @@ class todoList extends Component {
     this.setState({
       isEdittingDetail: false,
       edittingNew: false,
+      edittingItem: {
+        oldEventName: null,
+        newDetail: {},
+      },
     });
   }
 
@@ -98,7 +106,7 @@ class todoList extends Component {
 
   updatePri(d) {
     const n = this.state.edittingItem;
-    n.newDetail.priority = d;
+    n.newDetail.priority = parseInt(d);
     this.setState({
       edittingItem: n,
     });
@@ -153,38 +161,5 @@ class todoList extends Component {
     );
   }
 }
-
-/*
-const todoList = (props) => {
-  const todoItems = props.filteredList.map((item) => {
-    return (
-      <TodoItem
-        key={props.filteredList.indexOf(item)}
-        item={item}
-      />
-    );
-  });
-
-  return (
-    <div>
-      <div className="title">
-        <h2>{ props.selectedGroup }</h2>
-      </div>
-      <div className="row">
-        <div className="column column-60">
-          <table>
-            <tbody>
-              { (props.selectedGroup !== null) ? todoItems : <tr /> }
-            </tbody>
-          </table>
-        </div>
-        <div className="column column-40">
-          <TodoItemDetail />
-        </div>
-      </div>
-    </div>
-  );
-};
-*/
 
 export default todoList;

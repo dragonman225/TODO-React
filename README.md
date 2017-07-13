@@ -1,7 +1,8 @@
 # TODO-React
 
 A simple to-do list web app written in ReactJS.
-Fork from https://github.com/StephenGrider/ReduxSimpleStarter.
+
+The Webpack starter is forked from https://github.com/StephenGrider/ReduxSimpleStarter.
 
 ### Getting Started
 
@@ -10,4 +11,8 @@ Fork from https://github.com/StephenGrider/ReduxSimpleStarter.
 > cd TODO-React
 > npm install
 > npm start
+
 ```
+### Bugs
+
+* In TODO Item edit mode, if you edit the content but click the close(x) icon, the content will still be modified.
