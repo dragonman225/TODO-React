@@ -33,4 +33,4 @@ npm run build
 
 ### Bugs
 
-* Too many items in one list will cause interface overflow.
+* Too many items in one list will cause interface to overflow.
