@@ -1,3 +1,7 @@
+::-webkit-scrollbar {
+  display: none;
+}
+
 body, html, .wrapper, .container-full {
   height: 100%;
 }
@@ -68,6 +72,19 @@ tr .td-center:hover {
   background-color: #eeeeee;
 }
 
+tr .td-checkbox {
+  color: #212121;
+  background-color: #fafafa;
+  text-align: center;
+  max-width: 1rem;
+  padding: 1rem 0.4rem 1rem 0.6rem;
+  transition: 0.3s;
+}
+
+tr .td-checkbox:hover {
+  background-color: #eeeeee;
+}
+
 tr .td-danger {
   color: #eeeeee;
   background-color: #f44336;
@@ -105,6 +122,7 @@ td input[type="text"] {
 }
 
 .group-pane, .list-pane {
+  overflow-y: scroll;
   margin: 2rem;
 }
 
@@ -167,4 +185,10 @@ form input[type='radio'] {
   margin: 0rem 1rem 0rem 1rem;
   transform: scale(1.5);
   cursor: pointer;
+}
+
+.stat {
+  width: 25%;
+  position: absolute;
+  bottom: 0;
 }

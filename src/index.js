@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
+import uuid from 'uuid/v4';
 import TodoGroup from './components/todo_group';
 import TodoList from './components/todo_list';
 
@@ -8,59 +9,69 @@ class App extends Component {
     super(props);
 
     this.state = {
-      groups: ['Work', 'Play', 'Reading', 'Music'],
-      list: [
+      todoLists: [
         {
-          group: 'Work',
-          description: 'Finish project A.',
-          note: 'Before 10p.m. Call S for demo time appointment. Cannot delay.',
-          priority: 1,
+          name: 'Work',
+          id: '1572527',
+          list: [
+            {
+              id: '32332',
+              description: 'Finish project A.',
+              note: 'Before 10p.m. Call S for demo time appointment. Cannot delay.',
+              priority: 1,
+              completed: false,
+            },
+            {
+              id: '8739293',
+              description: 'Finish project B.',
+              note: 'Deadline is next Monday. Contact Baby in advance to check for his progress. ',
+              priority: 0,
+              completed: false,
+            },
+          ],
         },
         {
-          group: 'Work',
-          description: 'Finish project B.',
-          note: 'Deadline is next Monday. Contact Baby in advance to check for his progress. ',
-          priority: 0,
+          name: 'Play',
+          id: '63826382783',
+          list: [
+            {
+              id: '77927480',
+              description: 'GTAV',
+              note: 'Mission 45',
+              priority: 2,
+              completed: false,
+            },
+          ],
         },
         {
-          group: 'Play',
-          description: 'GTAV',
-          note: 'Mission 45',
-          priority: 2,
+          name: 'Music',
+          id: '18738739',
+          list: [],
         },
       ],
-      filteredList: [],
-      selectedGroup: null,
-      edittingGroup: null,
+      selectedGroupId: null,
+      edittingGroupId: null,
       newGroupName: null,
       nameLegal: true,
       edittingDetail: false,
     };
   }
 
-  removeGroup(name) {
+  removeGroup(id) {
     if (!this.state.nameLegal || this.state.edittingDetail) {
       return;
     }
-    const index = this.state.groups.indexOf(name);
-    const newGroups = this.state.groups;
-    const newList = this.state.list.filter((item) => {
-      return (item.group !== name);
-    });
-    newGroups.splice(index, 1);
+    const newTodoLists = this.state.todoLists.filter(item => (item.id !== id));
     this.setState({
-      groups: newGroups,
-      list: newList,
-      selectedGroup: null,
-      edittingGroup: null,
+      todoLists: newTodoLists,
+      selectedGroupId: null,
+      edittingGroupId: null,
     });
   }
 
   containSameOrEmpty(name) {
     const self = this;
-    const res = this.state.groups.map((item) => {
-      return (name === '' || (item === name && item !== self.state.edittingGroup));
-    });
+    const res = this.state.todoLists.map(item => (name === '' || (item.name === name && item.name !== self.state.edittingGroup)));
     return (res.indexOf(true) !== -1);
   }
 
@@ -74,36 +85,37 @@ class App extends Component {
 
   addGroup() {
     if (this.state.edittingDetail) return;
-    const newGroups = this.state.groups;
-    newGroups.push('');
+    const newId = uuid();
+    const newTodoLists = this.state.todoLists;
+    newTodoLists.push({
+      name: '',
+      id: newId,
+      list: [],
+    });
     this.setState({
-      groups: newGroups,
-      selectedGroup: null,
-      edittingGroup: '',
+      selectedGroupId: null,
+      edittingGroupId: newId,
       nameLegal: false,
       newGroupName: '',
-      filteredList: [],
     });
   }
 
-  editGroupChange(name) {
+  editGroupChange(id) {
     if (this.state.nameLegal && !this.state.edittingDetail) {
-      const index = this.state.groups.indexOf(this.state.edittingGroup);
-      const newGroups = this.state.groups;
-      const newList = this.state.list;
-      newGroups[index] = this.state.newGroupName;
-      newList.forEach((item) => {
-        if (item.group === this.state.edittingGroup) item.group = this.state.newGroupName;
+      const edittingGroup = this.state.todoLists.find(item => (item.id === id));
+      const edittingGroupName = edittingGroup ? edittingGroup.name : null;
+      const newTodoLists = this.state.todoLists;
+      newTodoLists.forEach((item) => {
+        if (item.id === this.state.edittingGroupId) item.name = this.state.newGroupName;
       });
       this.setState({
-        list: newList,
-        groups: newGroups,
-        edittingGroup: name,
-        newGroupName: name,
+        todoLists: newTodoLists,
+        edittingGroupId: id,
+        newGroupName: edittingGroupName,
       });
     }
   }
-
+/*
   filterAndSort(list, groupName) {
     const priorityHigh = [];
     const priorityMed = [];
@@ -126,56 +138,108 @@ class App extends Component {
       }
     }
     return priorityHigh.concat(priorityMed, priorityLow);
-  }
+  }*/
 
-  changeList(groupName) {
+  changeList(groupId) {
     if (this.state.edittingDetail) return;
-    const newFilteredList = this.filterAndSort(this.state.list, groupName);
     this.setState({
-      filteredList: newFilteredList,
-      selectedGroup: groupName,
+      selectedGroupId: groupId,
     });
   }
 
-  addItem(newItem) {
-    console.log('add');
-    const newList = this.state.list;
-    newList.push(newItem);
-    const newFilteredList = this.filterAndSort(newList, this.state.selectedGroup);
+  addItem(newItem, listId) {
+    console.log('[Debug]add item');
+    const newTodoLists = this.state.todoLists;
+    const targetList = newTodoLists.find(item => (item.id === listId));
+    const index = newTodoLists.indexOf(targetList);
+    newTodoLists[index].list.push(newItem);
     this.setState({
-      list: newList,
-      filteredList: newFilteredList,
+      todoLists: newTodoLists,
       edittingDetail: false,
     });
   }
 
-  editItem(oldEventName, modifiedItem) {
-    console.log('edit');
-    const newList = this.state.list;
-    newList.forEach((item) => {
-      if (item.description === oldEventName) item = modifiedItem;
-    });
-    const newFilteredList = this.filterAndSort(newList, this.state.selectedGroup);
+  getItemIndex(itemId) {
+    const newTodoLists = this.state.todoLists;
+    for (let i = 0; i < newTodoLists.length; i += 1) {
+      for (let j = 0; j < newTodoLists[i].list.length; j += 1) {
+        if (newTodoLists[i].list[j].id === itemId) return [i, j];
+      }
+    }
+    return [null, null];
+  }
+
+  editItem(modifiedItem, itemId) {
+    console.log('[Debug]edit item');
+    const newTodoLists = this.state.todoLists;
+    const index = this.getItemIndex(itemId);
+    if (index[0] !== null) {
+      newTodoLists[index[0]].list.splice(index[1], 1, modifiedItem);
+    } else {
+      console.log(`[Debug]item ${itemId} not found`);
+    }
     this.setState({
-      list: newList,
-      filteredList: newFilteredList,
+      todoLists: newTodoLists,
       edittingDetail: false,
     });
   }
 
-  removeTodoItem(item) {
-    console.log('remove');
-    const newList = this.state.list.filter((i) => {
-      return (i !== item);
-    });
-    const newFilteredList = this.filterAndSort(newList, this.state.selectedGroup);
+  removeTodoItem(itemId) {
+    console.log(`[Debug]removing item ${itemId}`);
+    const newTodoLists = this.state.todoLists;
+    const index = this.getItemIndex(itemId);
+    if (index[0] !== null) {
+      newTodoLists[index[0]].list.splice(index[1], 1);
+    } else {
+      console.log(`[Debug]item ${itemId} not found`);
+    }
     this.setState({
-      list: newList,
-      filteredList: newFilteredList,
+      todoLists: newTodoLists,
     });
+  }
+
+  checkComplete(itemId) {
+    const index = this.getItemIndex(itemId);
+    const newTodoLists = this.state.todoLists;
+    if (index[0] !== null) {
+      const c = newTodoLists[index[0]].list[index[1]].completed;
+      newTodoLists[index[0]].list[index[1]].completed = !c;
+    } else {
+      console.log(`[Debug]item ${itemId} not found`);
+    }
+    this.setState({
+      todoLists: newTodoLists,
+    });
+  }
+
+  calculateCompleted() {
+    const todoLists = this.state.todoLists;
+    let completedNum = 0;
+    let unCompletedNum = 0;
+    for (let i = 0; i < todoLists.length; i += 1) {
+      for (let j = 0; j < todoLists[i].list.length; j += 1) {
+        if (todoLists[i].list[j].completed === true) {
+          completedNum += 1;
+        } else {
+          unCompletedNum += 1;
+        }
+      }
+    }
+    return [completedNum, unCompletedNum];
   }
 
   render() {
+    console.log('[Debug]render app');
+    const s = this.state;
+    const groups = s.todoLists.map((item) => {
+      const obj = {
+        name: item.name,
+        id: item.id,
+      };
+      return obj;
+    });
+    const listToShow = s.todoLists.find(item => (item.id === s.selectedGroupId));
+    const stat = this.calculateCompleted();
     return (
       <div className="row">
         <div className="column column-25 left-bar">
@@ -183,26 +247,37 @@ class App extends Component {
             <h2>TODOs</h2>
           </div>
           <TodoGroup
-            onItemSelect={selectedGroup => this.changeList(selectedGroup)}
-            onItemRemove={name => this.removeGroup(name)}
-            onEditGroupChange={name => this.editGroupChange(name)}
+            onItemSelect={selectedGroupId => this.changeList(selectedGroupId)}
+            onItemRemove={id => this.removeGroup(id)}
+            onEditGroupChange={id => this.editGroupChange(id)}
             onGroupNameChange={newName => this.editGroupName(newName)}
-            groups={this.state.groups}
-            edittingGroup={this.state.edittingGroup}
-            newGroupName={this.state.newGroupName}
-            showErrMsg={!this.state.nameLegal}
+            groups={groups}
+            edittingGroupId={s.edittingGroupId}
+            newGroupName={s.newGroupName}
+            showErrMsg={!s.nameLegal}
             addGroup={() => this.addGroup()}
           />
+          <div className="stat">
+            <div className="row">
+              <div className="column column-40 column-offset-10">
+                <h1 style={{ color: '#00c853' }}>{stat[0]}</h1>
+                <h4>Completed</h4>
+              </div>
+              <div className="column column-40">
+                <h1 style={{ color: '#f44336' }}>{stat[1]}</h1>
+                <h4>Left</h4>
+              </div>
+            </div>
+          </div>
         </div>
         <div className="column column-75 main-area">
           <TodoList
             edittingDetail={val => this.setState({ edittingDetail: val })}
-            editItem={(oldEventName, item) => this.editItem(oldEventName, item)}
-            addItem={item => this.addItem(item)}
-            removeTodoItem={item => this.removeTodoItem(item)}
-            groups={this.state.groups}
-            filteredList={this.state.filteredList}
-            selectedGroup={this.state.selectedGroup}
+            addItem={(item, listId) => this.addItem(item, listId)}
+            editItem={(item, itemId) => this.editItem(item, itemId)}
+            removeTodoItem={itemId => this.removeTodoItem(itemId)}
+            checkComplete={itemId => this.checkComplete(itemId)}
+            listObj={listToShow}
           />
         </div>
       </div>

@@ -8,13 +8,14 @@ const todoGroup = (props) => {
   const todoGroupItems = props.groups.map((item) => {
     return (
       <TodoGroupItem
-        key={props.groups.indexOf(item)}
         onItemSelect={props.onItemSelect}
         onItemRemove={props.onItemRemove}
         onEditGroupChange={props.onEditGroupChange}
         onGroupNameChange={props.onGroupNameChange}
-        item={item}
-        editting={item === props.edittingGroup}
+        name={item.name}
+        id={item.id}
+        key={item.id}
+        editting={item.id === props.edittingGroupId}
         newGroupName={props.newGroupName}
       />
     );
@@ -29,7 +30,7 @@ const todoGroup = (props) => {
       {error ? <div className="msg-err"><i className="fa fa-exclamation-triangle" aria-hidden="true" />WARNING: Field is empty or Name exists!</div> : <div />}
       <TodoAddGroup
         addGroup={props.addGroup}
-        adding={props.edittingGroup === ''}
+        adding={props.edittingGroupId !== null}
       />
     </div>
   );

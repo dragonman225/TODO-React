@@ -5,7 +5,7 @@ const todoItemDetail = (props) => {
   const pn = props.newDetail;
   const focus = props.isEdittingDetail;
   const isNew = props.edittingNew;
-  const css = focus ? { transform: 'translateX(-83%)', width: '200%' } : { transform: 'translateX(0rem)' };
+  const css = focus ? { transform: 'translateX(-85%)', width: '200%' } : { transform: 'translateX(0rem)' };
   if (!p) {
     if (!focus) {
       return (
@@ -46,9 +46,7 @@ const todoItemDetail = (props) => {
   if (focus) {
     return (
       <div className="detail-pane" style={css}>
-        <button className="btn-close" onClick={() => props.cancelEdit()}>
-          <i className="fa fa-times" aria-hidden="true" />
-        </button>
+        {isNew ? <button className="btn-close" onClick={() => props.cancelEdit()}><i className="fa fa-times" aria-hidden="true" /></button> : <div />}
         <div className="detail-card">
           <h3>Event</h3>
           <input className="input-custom" type="text" value={pn.description} onChange={event => props.onDescChange(event.target.value)} />
@@ -66,7 +64,7 @@ const todoItemDetail = (props) => {
           </form>
         </div>
         <div className="detail-card">
-          <button className="btn-add" onClick={() => props.summitEdit(isNew)}>{isNew ? 'Add' : 'Modify'}</button>
+          <button className="btn-add" onClick={() => props.summitEdit(isNew)}>{isNew ? 'Add' : 'OK'}</button>
         </div>
       </div>
     );
