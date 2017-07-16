@@ -57,6 +57,16 @@ class App extends Component {
     };
   }
 
+  getItemIndex(itemId) {
+    const newTodoLists = this.state.todoLists;
+    for (let i = 0; i < newTodoLists.length; i += 1) {
+      for (let j = 0; j < newTodoLists[i].list.length; j += 1) {
+        if (newTodoLists[i].list[j].id === itemId) return [i, j];
+      }
+    }
+    return [null, null];
+  }
+
   removeGroup(id) {
     if (!this.state.nameLegal || this.state.edittingDetail) {
       return;
@@ -115,30 +125,6 @@ class App extends Component {
       });
     }
   }
-/*
-  filterAndSort(list, groupName) {
-    const priorityHigh = [];
-    const priorityMed = [];
-    const priorityLow = [];
-    for (let i = 0; i < list.length; i += 1) {
-      if (list[i].group === groupName) {
-        switch (list[i].priority) {
-          case 0:
-            priorityHigh.push(list[i]);
-            break;
-          case 1:
-            priorityMed.push(list[i]);
-            break;
-          case 2:
-            priorityLow.push(list[i]);
-            break;
-          default:
-            console.log('Priority is not valid.');
-        }
-      }
-    }
-    return priorityHigh.concat(priorityMed, priorityLow);
-  }*/
 
   changeList(groupId) {
     if (this.state.edittingDetail) return;
@@ -157,16 +143,6 @@ class App extends Component {
       todoLists: newTodoLists,
       edittingDetail: false,
     });
-  }
-
-  getItemIndex(itemId) {
-    const newTodoLists = this.state.todoLists;
-    for (let i = 0; i < newTodoLists.length; i += 1) {
-      for (let j = 0; j < newTodoLists[i].list.length; j += 1) {
-        if (newTodoLists[i].list[j].id === itemId) return [i, j];
-      }
-    }
-    return [null, null];
   }
 
   editItem(modifiedItem, itemId) {

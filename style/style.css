@@ -122,7 +122,6 @@ td input[type="text"] {
 }
 
 .group-pane, .list-pane {
-  overflow-y: scroll;
   margin: 2rem;
 }
 

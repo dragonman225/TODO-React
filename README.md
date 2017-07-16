@@ -2,17 +2,35 @@
 
 A simple to-do list web app written in ReactJS.
 
+![screenshot](https://github.com/dragonman225/TODO-React/blob/master/assets/sc01.png)
+
 The Webpack starter is forked from https://github.com/StephenGrider/ReduxSimpleStarter.
 
 ### Getting Started
+
+#### 1. Start `webpack-dev-server`
 
 ```
 > git clone https://github.com/dragonman225/TODO-React.git
 > cd TODO-React
 > npm install
 > npm start
+```
+
+#### 2. Go to `localhost:8080` in browser.
+#### 3. Edit code and refresh the browser to view changes.
+
+### Build for Production
+
+#### 1. Run `webpack` for Building
 
 ```
+npm run build
+```
+* `./build` folder will be created with `bundle.js` inside.
+
+#### 2. Open `index.build.html` in browser
+
 ### Bugs
 
-* In TODO Item edit mode, if you edit the content but click the close(x) icon, the content will still be modified.
+* Too many items in one list will cause interface overflow.
