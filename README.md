@@ -2,6 +2,8 @@
 
 A simple to-do list web app written in ReactJS.
 
+### :warning: This project is quite old and contains a lot of vulnerabilities in dependencies.
+
 ![screenshot](https://github.com/dragonman225/TODO-React/blob/master/assets/sc01.png)
 
 Demo : [Link](https://dragonman225.github.io/TODO-React)
